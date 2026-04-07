@@ -11,7 +11,7 @@
       try {
         await qz.websocket.connect();
 
-        const printer = await qz.printers.find("CT221B-4E7A");
+        const printer = await qz.printers.find("CT221B");
         console.log("Printer:", printer);
 
         const config = qz.configs.create(printer);
