@@ -62,7 +62,7 @@ function printLabel() {
 
     document.getElementById("status").innerText = "Đang gửi lệnh in...";
 
-    fetch("http://localhost:5000/", {
+    fetch("https://serverprint-cp38.onrender.com/print", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
