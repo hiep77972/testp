@@ -1,32 +1,84 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
-  <script src="https://cdn.jsdelivr.net/npm/qz-tray/qz-tray.js"></script>
+    <meta charset="UTF-8">
+    <title>In Tem</title>
+    <style>
+        body {
+            font-family: Arial;
+            max-width: 500px;
+            margin: 50px auto;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        #status {
+            margin-top: 15px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-  <button onclick="printTest()">In thử</button>
 
-  <script>
-    async function printTest() {
-      try {
-        await qz.websocket.connect();
+<h2>In Tem Sản Phẩm</h2>
 
-        const printer = await qz.printers.find("CT221B");
-        console.log("Printer:", printer);
+<input id="productName" placeholder="Tên sản phẩm (VD: Coca Cola)" />
+<input id="quantity" placeholder="Số lượng (VD: 10 cái)" />
+<input id="price" placeholder="Giá (VD: 3000đ)" />
+<input id="qr" placeholder="QR Code (VD: 12345678)" />
 
-        const config = qz.configs.create(printer);
+<button onclick="printLabel()">In Tem</button>
 
-        await qz.print(config, [{
-          type: 'raw',
-          format: 'plain',
-          data: 'HELLO QZ TRAY\n\n\n'
-        }]);
+<div id="status"></div>
 
-        alert("Đã gửi lệnh in!");
-      } catch (err) {
+<script>
+function printLabel() {
+    const data = {
+        productName: document.getElementById("productName").value,
+        quantity: document.getElementById("quantity").value,
+        price: document.getElementById("price").value,
+        qr: document.getElementById("qr").value
+    };
+
+    document.getElementById("status").innerText = "Đang gửi lệnh in...";
+
+    fetch("http://localhost:5000/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    })
+    .then(res => res.text())
+    .then(res => {
+        document.getElementById("status").innerText = "✅ In thành công!";
+    })
+    .catch(err => {
+        document.getElementById("status").innerText = "❌ Không kết nối được máy in!";
         console.error(err);
-      }
-    }
-  </script>
+    });
+}
+</script>
+
 </body>
 </html>
