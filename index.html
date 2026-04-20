@@ -41,10 +41,11 @@
 <body>
 
 <h2>In Tem Sản Phẩm</h2>
-
+<input id="cssx" placeholder="Cơ sở sản xuất" />
 <input id="productName" placeholder="Tên sản phẩm (VD: Coca Cola)" />
 <input id="quantity" placeholder="Số lượng (VD: 10 cái)" />
 <input id="price" placeholder="Giá (VD: 3000đ)" />
+<input id="hsd" placeholder="Hạn sử dụng" />
 <input id="qr" placeholder="QR Code (VD: 12345678)" />
 
 <button onclick="printLabel()">In Tem</button>
@@ -57,7 +58,9 @@ function printLabel() {
         productName: document.getElementById("productName").value,
         quantity: document.getElementById("quantity").value,
         price: document.getElementById("price").value,
-        qr: document.getElementById("qr").value
+        qr: document.getElementById("qr").value,
+        cssx: document.getElementById("cssx").value,
+        hsd: document.getElementById("hsd").value
     };
 
     document.getElementById("status").innerText = "Đang gửi lệnh in...";
